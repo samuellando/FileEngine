@@ -34,7 +34,7 @@ public class PhileDriver {
             failed = true;
         }
         // Test rename
-        if (!(testFile.rename("newFileName.txt"))) {
+        if (!(testFile.rename("newFileName"))) {
             System.out.println("The rename failed");
             failed = true;
         }
@@ -42,7 +42,7 @@ public class PhileDriver {
             System.out.println("The rename failed");
             failed = true;
         }
-        if (!(testFile.rename("testFile.txt"))) {
+        if (!(testFile.rename("testFile"))) {
             System.out.println("The rename failed");
             failed = true;
         }
@@ -57,7 +57,7 @@ public class PhileDriver {
         }
         testDirGit.updateFiles();
         failed = true;
-        for (int i = 0;testDirGit.listFiles();i++) {
+        for (int i = 0;i<2;i++) {
             if (testDirGit.listFiles()[i].toString().equals("testFile.txt")) {
                 failed = false;
             }
