@@ -11,7 +11,7 @@ public class DirectoryDriver {
 
         // Test the constructior.
         Directory testDir = new Directory("./testWorkspace/testDir", false);
-        Directory testDirGit = new Directory("./testWorkspace/testDirWithGit",true);
+        Directory testDirGit = new Directory("./testWorkspace/otherTestDir",true);
         if (testDir.listFiles()==null||testDirGit.listFiles()==null) {
             System.out.println("The constructior Failed");
             failed = true;
@@ -73,8 +73,8 @@ public class DirectoryDriver {
             System.out.println("The gitSync Failed on non git dir");
             failed = true;
         }
-        if (!testDirGit.gitSync()) {
-            System.out.println("The gitSync Failed on git dir");
+        if (testDirGit.gitSync()) {
+            System.out.println("The gitSync Failed on git dir without git");
             failed = true;
         }
         // Return passed message if everything is ok.
