@@ -10,7 +10,7 @@ echo file_engine
 javac -d ./bin ./src/file_engine/*.java -classpath ./bin
 echo
 echo Interfaces
-javac -d ./bin ./src/*.java -classpath ./bin
+javac -d ./bin ./src/interfaces/*.java -classpath ./bin
 echo
 echo make test bin
 cp -r ./bin/file_engine ./test

@@ -1,4 +1,4 @@
-
+package interfaces;
 import file_engine.FileEngine;
 import java.util.Scanner;
 
@@ -68,12 +68,12 @@ public class CommandLineInterface {
                 case "work":
                 case "w":
                     if (api.listFiles(1).length > 0) {
-                        for (int i = 0;i<api.listFiles(0).length;i++,i--) {
-                            api.listFiles(0)[i].move(api.getDirectories()[1]);
+                        for (int i = 0;i<api.listFiles(1).length;i++) {
+                            api.listFiles(1)[i].move(api.getDirectories()[0]);
                         }
                     } else {
-                        for (int i = 0;i<api.listFiles(1).length;i++,i--) {
-                            api.listFiles(1)[i].move(api.getDirectories()[0]);
+                        for (int i = 0;i<api.listFiles(0).length;i++) {
+                            api.listFiles(0)[i].move(api.getDirectories()[1]);
                         }
                     }
                     break;
@@ -93,6 +93,7 @@ public class CommandLineInterface {
                     } catch (Exception e) {
                         System.out.println("Error opening file manager.");
                     }
+                    keyboard.nextLine();
                     break;
                 default:
                     System.out.println("Command not recongnized.");

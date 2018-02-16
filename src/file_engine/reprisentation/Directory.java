@@ -78,8 +78,9 @@ public class Directory {
     public String getAbsolutePath() {
         // Get the absolute path form the relative path and return it.
         try {
-            return Thread.currentThread().getContextClassLoader().getResource(path).toString().substring(5);
+            return new File(path).getCanonicalPath();
         } catch (Exception e) {
+            System.out.println(e);
             System.out.println("ERROR on Directory CODE:4");
             return "";
         }
