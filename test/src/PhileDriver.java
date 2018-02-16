@@ -55,7 +55,7 @@ public class PhileDriver {
             System.out.println("The move failed");
             failed = true;
         }
-        tesDirGit.updateFiles();
+        testDirGit.updateFiles();
         failed = true;
         for (int i = 0;testDirGit.listFiles();i++) {
             if (testDirGit.listFiles()[i].toString().equals("testFile.txt")) {
