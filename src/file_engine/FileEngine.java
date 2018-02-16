@@ -65,7 +65,6 @@ public class FileEngine {
         // Scan DB_NAME and create Directory object in directories instance variable for each line.
         Scanner fileIn;
         int size = 0; // Size of db.
-
         try
         {
             // Attempt to open the db file and scanner on it.
@@ -118,11 +117,11 @@ public class FileEngine {
         return true;
     }
 
-    public boolean addDirectory(String path, String git) {
+    public boolean addDirectory(String path, boolean git) {
         // Add new directory of database and loadDirectories.
         try{
             FileWriter fw = new FileWriter(DB_NAME,true); //the true will append the new data
-            fw.write(path+","+git);//appends the string to the file
+            fw.write(path+","+(git?"true":"false")+"\n");//appends the string to the file
             fw.close();
             loadDirectories();
             return true;
@@ -160,7 +159,7 @@ public class FileEngine {
             }
         }
         // copy db to dbContents except line 'num'
-        for (int i = 0;i<=directories.length;i++) {
+        for (int i = 0;i<directories.length;i++) {
             if (i!=num) {
                 dbContents += fileIn.nextLine()+"\n";
             }
