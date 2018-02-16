@@ -36,4 +36,5 @@ rm -r ./file_engine
 echo
 echo removing dirver classes
 rm -r *.class
+rm -r *.db
 echo

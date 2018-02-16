@@ -17,7 +17,7 @@ package file_engine;
     ** Run the loadDirectories method and return an error if it fails.
 
     * loadDirecrories (Private):
-    ** Scan dbName and create Directory object in directories instance variable
+    ** Scan DB_NAME and create Directory object in directories instance variable
     ** for each line.
 
     * addDirectory:
@@ -52,7 +52,7 @@ import file_engine.reprisentation.*;
 
 public class FileEngine {
 
-    public String dbName = "fileEngine.db"; // Name of db.
+    public String DB_NAME = "fileEngine.db"; // Name of db.
     private Directory[] directories;
 
     public FileEngine() {
@@ -62,17 +62,16 @@ public class FileEngine {
     }
 
     private boolean loadDirectories() {
-        // Scan dbName and create Directory object in directories instance variable for each line.
+        // Scan DB_NAME and create Directory object in directories instance variable for each line.
         Scanner fileIn;
         int size = 0; // Size of db.
-
         try
         {
             // Attempt to open the db file and scanner on it.
-            fileIn = new Scanner(new FileInputStream(dbName));
+            fileIn = new Scanner(new FileInputStream(DB_NAME));
         } catch (FileNotFoundException e) {
             // If the file could not be found then it is created.
-            File db = new File(dbName);
+            File db = new File(DB_NAME);
             try {
                 db.createNewFile();
             } catch (Exception e2) {
@@ -81,7 +80,7 @@ public class FileEngine {
             }
             try {
                 // Open scanner on new file
-                fileIn = new Scanner(new FileInputStream(dbName));
+                fileIn = new Scanner(new FileInputStream(DB_NAME));
             } catch (Exception e3) {
                 System.out.print("ERROR on FileEngine CODE:2");
                 return false;
@@ -94,7 +93,7 @@ public class FileEngine {
         }
         // Reinitialize the scanner on the file.
         try {
-            fileIn = new Scanner(new FileInputStream(dbName));
+            fileIn = new Scanner(new FileInputStream(DB_NAME));
         } catch (Exception e4) {
             System.out.println("ERROR on FileEngine CODE:3");
             fileIn.close();
@@ -118,11 +117,11 @@ public class FileEngine {
         return true;
     }
 
-    public boolean addDirectory(String path, String git) {
+    public boolean addDirectory(String path, boolean git) {
         // Add new directory of database and loadDirectories.
         try{
-            FileWriter fw = new FileWriter(dbName,true); //the true will append the new data
-            fw.write(path+","+git);//appends the string to the file
+            FileWriter fw = new FileWriter(DB_NAME,true); //the true will append the new data
+            fw.write(path+","+(git?"true":"false")+"\n");//appends the string to the file
             fw.close();
             loadDirectories();
             return true;
@@ -141,10 +140,10 @@ public class FileEngine {
         try
         {
             // Attempt to open the db file and scanner on it.
-            fileIn = new Scanner(new FileInputStream(dbName));
+            fileIn = new Scanner(new FileInputStream(DB_NAME));
         } catch (FileNotFoundException e) {
             // If the file could not be found then it is created.
-            File db = new File(dbName);
+            File db = new File(DB_NAME);
             try {
                 db.createNewFile();
             } catch (Exception e2) {
@@ -153,21 +152,21 @@ public class FileEngine {
             }
             try {
                 // Open scanner on new file
-                fileIn = new Scanner(new FileInputStream(dbName));
+                fileIn = new Scanner(new FileInputStream(DB_NAME));
             } catch (Exception e3) {
                 System.out.print("ERROR on FileEngine CODE:7");
                 return false;
             }
         }
         // copy db to dbContents except line 'num'
-        for (int i = 0;i<=directories.length;i++) {
+        for (int i = 0;i<directories.length;i++) {
             if (i!=num) {
                 dbContents += fileIn.nextLine()+"\n";
             }
         }
         fileIn.close(); // No longer needed.
         // Delete and recreate db.
-        File db = new File(dbName);
+        File db = new File(DB_NAME);
         try {
             db.delete();
             db.createNewFile();
@@ -177,7 +176,7 @@ public class FileEngine {
         }
         // Rewrite data to file.
         try{
-            FileWriter fw = new FileWriter(dbName,true); //the true will append the new data
+            FileWriter fw = new FileWriter(DB_NAME,true); //the true will append the new data
             fw.write(dbContents);//appends the string to the file
             fw.close();
             loadDirectories();
