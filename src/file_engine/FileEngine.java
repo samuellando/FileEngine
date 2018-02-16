@@ -26,6 +26,9 @@ package file_engine;
     * removeDirectory:
     ** Remove directory from database and loadDirectories.
 
+    * getDirectories:
+    ** return the directories instance variable.
+
     * gitSync:
     ** Run Directory.gitSync method on each Directory object in the directories
     ** instance variable.
@@ -52,7 +55,7 @@ import file_engine.reprisentation.*;
 
 public class FileEngine {
 
-    public String DB_NAME = "fileEngine.db"; // Name of db.
+    public String DB_NAME = ".fileEngine.db"; // Name of db.
     private Directory[] directories;
 
     public FileEngine() {
@@ -188,7 +191,11 @@ public class FileEngine {
         }
     }
 
-    public boolean GitSync() {
+    public Directory[] getDirectories() {
+        return directories;
+    }
+
+    public boolean gitSync() {
         // Run Directory.gitSync method on each Directory object in the directories instance variable.
         for (int i = 0; i < directories.length; i++) {
             directories[i].gitSync();

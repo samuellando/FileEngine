@@ -2,16 +2,17 @@ echo ---------------------------------------------------------------------------
 echo "                                          Running Compilation ...."
 echo --------------------------------------------------------------------------------------------------------
 echo
+mkdir bin
 echo file_engine.reprisentation
 javac -d ./bin ./src/file_engine/reprisentation/*.java
 echo
 echo file_engine
 javac -d ./bin ./src/file_engine/*.java -classpath ./bin
-# echo
-# echo Interfaces
-# javac -d ./bin ./src/*.java
 echo
-echo move these to test
+echo Interfaces
+javac -d ./bin ./src/*.java -classpath ./bin
+echo
+echo make test bin
 cp -r ./bin/file_engine ./test
 echo
 echo tests
@@ -36,5 +37,23 @@ rm -r ./file_engine
 echo
 echo removing dirver classes
 rm -r *.class
-rm -r *.db
+rm .*.db
+cd ../bin
+echo
+echo --------------------------------------------------------------------------------------------------------
+echo "                                          Building jars ...."
+echo --------------------------------------------------------------------------------------------------------
+echo
+rm -r ../builds
+mkdir ../builds
+cp ../src/manifest.txt .
+jar -cvfm FileEngine.jar manifest.txt *
+cd ../
+cp ./bin/FileEngine.jar ./builds
+echo
+echo removing bin
+echo
+rm -r bin
+echo
+echo DONE
 echo
