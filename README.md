@@ -26,7 +26,7 @@ Check out the [releases](https://github.com/SamuelLando/FileEngine/releases) Com
 File engine is a programmable API, simply import the java package and do as you wish.
 
 ## slack
-If you need any help, contact me on [slack]() 
+If you need any help, contact me on [slack](https://join.slack.com/t/fileengine/shared_invite/enQtMzE1NTM4NDg2NTk3LTRhMzkzZDQ2YmE0ZTNhN2YzNGYxN2QwYTVkNDg1NjEyNWU4MGE1OWM0NzZiNmU4M2JjYmUwMzc4NGI3ZDkxYmM) 
 
 # Contributing
 Check out the [CONTRIBUTING.md](/CONTRIBUTING.md) the [Issues](https://github.com/SamuelLando/FileEngine/issues) and the [documentation](/docs/builds). You can e-mail me or join the slack if you have any questions and if you want to stay in the loop.
