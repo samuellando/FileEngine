@@ -3,17 +3,17 @@ echo "                                          Running Compilation ...."
 echo --------------------------------------------------------------------------------------------------------
 echo
 mkdir bin
-echo file_engine.reprisentation
-javac -d ./bin ./src/file_engine/reprisentation/*.java
+echo fileengine.reprisentation
+javac -d ./bin ./src/fileengine/reprisentation/*.java
 echo
-echo file_engine
-javac -d ./bin ./src/file_engine/*.java -classpath ./bin
+echo fileengine
+javac -d ./bin ./src/fileengine/*.java -classpath ./bin
 echo
 echo Interfaces
 javac -d ./bin ./src/interfaces/*.java -classpath ./bin
 echo
 echo make test bin
-cp -r ./bin/file_engine ./test
+cp -r ./bin/fileengine ./test
 echo
 echo tests
 javac -d ./test ./test/src/*.java -cp ./test
@@ -33,7 +33,7 @@ echo FileEngine
 java FileEngineDriver
 echo
 echo removing test package
-rm -r ./file_engine
+rm -r ./fileengine
 echo
 echo removing dirver classes
 rm -r *.class
