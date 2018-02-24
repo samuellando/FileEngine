@@ -106,8 +106,17 @@ public class CommandLineInterface {
         default:
           System.out.println("Command not recongnized.");
           break;
+        case "clear":
+        case "c":
+          clear();
+          break;
       }
     }
     keyboard.close();
+  }
+  private static boolean clear() {
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+    return true;
   }
 }

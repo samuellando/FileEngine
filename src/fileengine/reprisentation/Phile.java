@@ -28,6 +28,12 @@ public class Phile {
 
   /** Take inputed tag and either swap the TAG in TAG`name or add a new one. */
   public boolean tag(String newTag) {
+    if (newTag.equals("")) {
+      return true;
+    }
+    if (newTag.equalsIgnoreCase("rem")) {
+      newTag = "";
+    }
     try {
       // Create file object for the file with current name with old TAG.
       File oldFile = new File(dir.getAbsolutePath() + "/" + name);

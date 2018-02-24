@@ -25,7 +25,7 @@ public class PhileDriver {
             System.out.println("The tag failed");
             failed = true;
         }
-        if (!(testFile.tag(""))) {
+        if (!(testFile.tag("rem"))) {
             System.out.println("The tag failed");
             failed = true;
         }
