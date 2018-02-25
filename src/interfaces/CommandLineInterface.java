@@ -17,7 +17,7 @@ public class CommandLineInterface {
   /** Primitive interface, asks commands and uses api to complete them. */
   public static void main(String[] args) {
     while (!kill) {
-      System.out.print("FE> ");
+      System.out.print("\033[34;1mFE> \033[37;0m");
       command = keyboard.nextLine().toLowerCase();
       api.updateFiles();
       switch (command) {
@@ -44,7 +44,7 @@ public class CommandLineInterface {
           break;
         case "backup":
         case "b":
-          if (api.listDir(1).length > 0) {
+          if (api.listFiles(1).length > 0) {
             work();
           }
           api.gitSync();
@@ -64,6 +64,8 @@ public class CommandLineInterface {
         case "clear":
         case "c":
           clear();
+          break;
+        case "":
           break;
         default:
           System.out.println("Command not recongnized.");
@@ -99,7 +101,7 @@ public class CommandLineInterface {
     String stringBuffer;
     boolean allFilled = true;
     for (int i = 0;i < api.listFiles(dir).length;i++) {
-      if (api.listFiles(dir)[i].indexOf("`") < 0) {
+      if (api.listFiles(dir)[i].toString().indexOf("`") < 0) {
         allFilled = false;
       }
     }
@@ -112,7 +114,7 @@ public class CommandLineInterface {
       }
     } else {
       for (int i = 0;i < api.listFiles(dir).length;i++) {
-        if (api.listFiles(dir)[i].indexOf("`") < 0) {
+        if (api.listFiles(dir)[i].toString().indexOf("`") < 0) {
           System.out.println(api.listFiles(dir)[i]);
           System.out.print("Enter tag: ");
           stringBuffer = keyboard.nextLine();
