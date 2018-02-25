@@ -53,10 +53,6 @@ public class CommandLineInterface {
         case "w":
           work();
           break;
-        case "list":
-        case "ls":
-          list();
-          break;
         case "open":
         case "o":
           open();
@@ -102,23 +98,29 @@ public class CommandLineInterface {
     boolean allFilled = true;
     for (int i = 0;i < api.listFiles(dir).length;i++) {
       if (api.listFiles(dir)[i].toString().indexOf("`") < 0) {
-        allFilled = false;
+        if (api.listFiles(dir)[i].toString().indexOf(".git") < 0) {
+          allFilled = false;
+        }
       }
     }
     if (allFilled) {
       for (int i = 0;i < api.listFiles(dir).length;i++) {
-        System.out.println(api.listFiles(dir)[i]);
-        System.out.print("Enter tag: ");
-        stringBuffer = keyboard.nextLine();
-        api.listFiles(dir)[i].tag(stringBuffer);
-      }
-    } else {
-      for (int i = 0;i < api.listFiles(dir).length;i++) {
-        if (api.listFiles(dir)[i].toString().indexOf("`") < 0) {
+        if (api.listFiles(dir)[i].toString().indexOf(".git") < 0) {
           System.out.println(api.listFiles(dir)[i]);
           System.out.print("Enter tag: ");
           stringBuffer = keyboard.nextLine();
           api.listFiles(dir)[i].tag(stringBuffer);
+        }
+      }
+    } else {
+      for (int i = 0;i < api.listFiles(dir).length;i++) {
+        if (api.listFiles(dir)[i].toString().indexOf("`") < 0) {
+          if (api.listFiles(dir)[i].toString().indexOf(".git") < 0) {
+            System.out.println(api.listFiles(dir)[i]);
+            System.out.print("Enter tag: ");
+            stringBuffer = keyboard.nextLine();
+            api.listFiles(dir)[i].tag(stringBuffer);
+          }
         }
       }
     }
@@ -127,13 +129,16 @@ public class CommandLineInterface {
 
   public static boolean archive(int dir) {
     for (int i = 0;i < api.listFiles(dir).length;i++) {
-      System.out.println(api.listFiles(dir)[i]);
-      System.out.print("Archive (y/n): ");
-      if (keyboard.nextLine().equalsIgnoreCase("y")) {
-        for (int k = 0;k < api.getDirectories().length;k++) {
-          if (api.getDirectories()[k].getAbsolutePath().indexOf(api.listFiles(dir)[i].toString().substring(0,api.listFiles(dir)[i].toString().indexOf("`"))) > 0) {
-            api.listFiles(dir)[i].tag("rem");
-            api.listFiles(dir)[i].move(api.getDirectories()[k]);
+      if (api.listFiles(dir)[i].toString().indexOf(".git") < 0) {
+        System.out.println(api.listFiles(dir)[i]);
+        System.out.print("Archive (y/n): ");
+        if (keyboard.nextLine().equalsIgnoreCase("y")) {
+          for (int k = 0;k < api.getDirectories().length;k++) {
+            if (api.getDirectories()[k].getAbsolutePath().indexOf(api.listFiles(dir)[i].toString().substring(0,api.listFiles(dir)[i].toString().indexOf("`"))) > 0) {
+              api.listFiles(dir)[i].tag("rem");
+              api.listFiles(dir)[i].move(api.getDirectories()[k]);
+              break;
+            }
           }
         }
       }
@@ -156,21 +161,24 @@ public class CommandLineInterface {
     return true;
   }
 
-  private static boolean list() {
-    for (int i = 2;i < api.getDirectories().length;i++) {
-      System.out.println(api.getDirectories()[i].toString());
-    }
-    return true;
-  }
-
   private static boolean open() {
     String stringBuffer;
     ProcessBuilder builder = new ProcessBuilder();
     Process process;
-    System.out.print("Enter directory index: ");
-    stringBuffer = api.getDirectories()[keyboard.nextInt()].getAbsolutePath();
-    keyboard.nextLine();
-    builder.command("nautilus",stringBuffer);
+    for (int i = 2;i < api.getDirectories().length;i++) {
+      System.out.print(i-2+" : ");
+      System.out.println(api.getDirectories()[i].toString());
+    }
+    try {
+      System.out.print("Enter directory number: ");
+      stringBuffer = api.getDirectories()[keyboard.nextInt()+2].getAbsolutePath();
+      keyboard.nextLine();
+      builder.command("nautilus",stringBuffer);
+    } catch (Exception e) {
+      keyboard.nextLine();
+      System.out.println("Directory does not exist");
+      return true;
+    }
     try {
       process = builder.start();
       return true;
