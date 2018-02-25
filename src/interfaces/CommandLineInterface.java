@@ -132,6 +132,7 @@ public class CommandLineInterface {
       if (keyboard.nextLine().equalsIgnoreCase("y")) {
         for (int k = 0;k < api.getDirectories().length;k++) {
           if (api.getDirectories()[k].getAbsolutePath().indexOf(api.listFiles(dir)[i].toString().substring(0,api.listFiles(dir)[i].toString().indexOf("`"))) > 0) {
+            api.listFiles(dir)[i].tag("rem");
             api.listFiles(dir)[i].move(api.getDirectories()[k]);
           }
         }
