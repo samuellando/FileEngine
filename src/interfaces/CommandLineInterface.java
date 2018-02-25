@@ -147,7 +147,9 @@ public class CommandLineInterface {
       }
     } else {
       for (int i = 0;i < api.listFiles(0).length;i++) {
-        api.listFiles(0)[i].move(api.getDirectories()[1]);
+        if (api.listFiles(0)[i].toString().indexOf(".git") < 0) {
+          api.listFiles(0)[i].move(api.getDirectories()[1]);
+        }
       }
     }
     return true;
