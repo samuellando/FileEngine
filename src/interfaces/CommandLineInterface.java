@@ -17,7 +17,7 @@ public class CommandLineInterface {
   /** Primitive interface, asks commands and uses api to complete them. */
   public static void main(String[] args) {
     while (!kill) {
-      System.out.print("FE> ");
+      System.out.print("\033[34;1mFE> \033[37;0m");
       command = keyboard.nextLine().toLowerCase();
       api.updateFiles();
       switch (command) {
@@ -34,14 +34,19 @@ public class CommandLineInterface {
           break;
         case "tag":
         case "t":
-          tag();
+          tag(0);
+          tag(1);
           break;
         case "archive":
         case "a":
-          archive();
+          archive(0);
+          archive(1);
           break;
         case "backup":
         case "b":
+          if (api.listFiles(1).length > 0) {
+            work();
+          }
           api.gitSync();
           break;
         case "work":
@@ -59,6 +64,8 @@ public class CommandLineInterface {
         case "clear":
         case "c":
           clear();
+          break;
+        case "":
           break;
         default:
           System.out.println("Command not recongnized.");
@@ -90,25 +97,42 @@ public class CommandLineInterface {
     return true;
   }
 
-  private static boolean tag() {
+  private static boolean tag(int dir) {
     String stringBuffer;
-    for (int i = 0;i < api.listFiles(0).length;i++) {
-      System.out.println(api.listFiles(0)[i]);
-      System.out.print("Enter tag: ");
-      stringBuffer = keyboard.nextLine();
-      api.listFiles(0)[i].tag(stringBuffer);
+    boolean allFilled = true;
+    for (int i = 0;i < api.listFiles(dir).length;i++) {
+      if (api.listFiles(dir)[i].toString().indexOf("`") < 0) {
+        allFilled = false;
+      }
+    }
+    if (allFilled) {
+      for (int i = 0;i < api.listFiles(dir).length;i++) {
+        System.out.println(api.listFiles(dir)[i]);
+        System.out.print("Enter tag: ");
+        stringBuffer = keyboard.nextLine();
+        api.listFiles(dir)[i].tag(stringBuffer);
+      }
+    } else {
+      for (int i = 0;i < api.listFiles(dir).length;i++) {
+        if (api.listFiles(dir)[i].toString().indexOf("`") < 0) {
+          System.out.println(api.listFiles(dir)[i]);
+          System.out.print("Enter tag: ");
+          stringBuffer = keyboard.nextLine();
+          api.listFiles(dir)[i].tag(stringBuffer);
+        }
+      }
     }
     return true;
   }
 
-  public static boolean archive() {
-    for (int i = 0;i < api.listFiles(0).length;i++) {
-      System.out.println(api.listFiles(0)[i]);
+  public static boolean archive(int dir) {
+    for (int i = 0;i < api.listFiles(dir).length;i++) {
+      System.out.println(api.listFiles(dir)[i]);
       System.out.print("Archive (y/n): ");
       if (keyboard.nextLine().equalsIgnoreCase("y")) {
         for (int k = 0;k < api.getDirectories().length;k++) {
-          if (api.getDirectories()[k].getAbsolutePath().indexOf(api.listFiles(0)[i].toString().substring(0,api.listFiles(0)[i].toString().indexOf("`"))) > 0) {
-            api.listFiles(0)[i].move(api.getDirectories()[k]);
+          if (api.getDirectories()[k].getAbsolutePath().indexOf(api.listFiles(dir)[i].toString().substring(0,api.listFiles(dir)[i].toString().indexOf("`"))) > 0) {
+            api.listFiles(dir)[i].move(api.getDirectories()[k]);
           }
         }
       }
@@ -123,7 +147,9 @@ public class CommandLineInterface {
       }
     } else {
       for (int i = 0;i < api.listFiles(0).length;i++) {
-        api.listFiles(0)[i].move(api.getDirectories()[1]);
+        if (api.listFiles(0)[i].toString().indexOf(".git") < 0) {
+          api.listFiles(0)[i].move(api.getDirectories()[1]);
+        }
       }
     }
     return true;
