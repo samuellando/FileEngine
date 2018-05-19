@@ -120,4 +120,15 @@ public class Directory {
       return false;
     }
   }
+  public boolean open() {
+    try {
+      ProcessBuilder builder = new ProcessBuilder();
+      builder.directory(new File(getAbsolutePath()));
+      builder.command("nautilus",".");
+      builder.start();
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
 }
