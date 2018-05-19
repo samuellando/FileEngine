@@ -1,1 +1,1 @@
-Main-Class: interfaces.CommandLineInterface
+Main-Class: interfaces.GraphicalInterface
