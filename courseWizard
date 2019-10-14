@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# Creates a new course folder in archive and adds info.yml
+
+if [ $# -le 0 ]; then
+  echo "Insuficient parameters, please see man courseWizard."
+  exit -1
+fi
+
+archive=$1
+
+cont="y"
+while [ "$cont" = "y" ]
+do
+  echo "Enter course code:"
+  read code
+  echo "Enter course title:"
+  read title
+  echo "Enter course section:"
+  read section
+  echo "Enter course instructor:"
+  read instructor
+  echo "Enter start year:"
+  read year
+  echo "Enter start month:"
+  read month
+  echo "Enter start day:"
+  read day
+  echo "Enter end year:"
+  read eyear
+  echo "Enter end month:"
+  read emonth
+  echo "Enter end day:"
+  read eday
+
+  archivef=$archive/$code\_$title
+  mkdir -p $archivef
+
+  echo "
+    title: '$title'
+    code: '$code'
+    section: '$section'
+    instructor: '$instructor'
+    start: '$year/$month/$day'
+    end: '$eyear/$emonth/$eday'
+  " > $archivef/info.yml
+
+  mkdir $archivef/notes
+  mkdir $archivef/pile
+  mkdir $archivef/work
+  mkdir $archivef/documents
+
+  echo "Enter new course (y/n):"
+  read cont
+done

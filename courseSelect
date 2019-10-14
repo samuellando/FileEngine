@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+# Update the currentCourse directory.
+
+if [ $# -le 2 ]; then
+  echo "Insufficient parameters, please see man courseSelect."
+  exit -1
+fi
+
+courseDir=$1
+#"/home/sam/Documents/masterWorkFolder/undergraduate"
+currentDir=$2
+#"/home/sam/Documents/currentCourse"
+selection=$3
+
+# Build a list of courses that are currently being taken.
+courses=""
+for course in $(ls $courseDir) 
+  do 
+    s=$(grep "start" "$courseDir/$course/info.yml" | 
+        grep -o "'.*'" | sed -e "s/'//" | sed -e "s/'//") 
+    e=$(grep "end" "$courseDir/$course/info.yml" | 
+        grep -o "'.*'" | 
+        sed -e "s/'//" | 
+        sed -e "s/'//")
+    if [ $(date -d $s +%s) -le $(date +%s) ] && 
+       [ $(date -d $e +%s) -ge $(date +%s) ]
+      then
+        courses="$courses$course\n"
+    fi
+done
+
+if [ $3 = "-l" ]; then
+  printf $courses
+  exit
+fi
+
+unlink $currentDir
+ln -s "$courseDir/$selection" $currentDir
