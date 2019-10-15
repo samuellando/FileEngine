@@ -8,9 +8,7 @@ if [ $# -le 2 ]; then
 fi
 
 courseDir=$1
-#"/home/sam/Documents/masterWorkFolder/undergraduate"
 currentDir=$2
-#"/home/sam/Documents/currentCourse"
 selection=$3
 
 # Build a list of courses that are currently being taken.
@@ -30,7 +28,7 @@ for course in $(ls $courseDir)
     fi
 done
 
-if [ $3 = "-l" ]; then
+if [ $3 = "" ]; then
   printf $courses
   exit
 fi
