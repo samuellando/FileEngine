@@ -2,7 +2,7 @@
 #
 # Update the currentCourse directory.
 
-if [ $# -le 2 ]; then
+if [ $# -le 1 ]; then
   echo "Insufficient parameters, please see man courseSelect."
   exit -1
 fi
@@ -28,7 +28,7 @@ for course in $(ls $courseDir)
     fi
 done
 
-if [ $3 = "" ]; then
+if [ "$3" = "" ]; then
   printf $courses
   exit
 fi
